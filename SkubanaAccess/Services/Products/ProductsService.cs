@@ -14,8 +14,10 @@ namespace SkubanaAccess.Services.Products
 {
     public class ProductsService : ServiceBaseWithTokenAuth, IProductsService
     {
+        private readonly SkubanaConfig config;
         public ProductsService(SkubanaConfig config) : base(config) 
         {
+            this.config = config;
         }
 
         public async Task<IEnumerable<SkubanaProduct>> GetProductsBySkus(IEnumerable<string> skus, CancellationToken token, Mark mark = null)

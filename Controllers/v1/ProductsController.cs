@@ -18,13 +18,9 @@ namespace MicroserviceWebApi.Controllers.v1
     public class ProductsController : BaseController
     {
         private readonly IProductsService service;
-        public ProductsController(IConfiguration Configuration) : base(Configuration)
+        public ProductsController(IConfiguration Configuration, IProductsService productsService) : base(Configuration)
         {
-            this.service = new ProductsService(skubanaConfig);
-
-            //this.service = service ??
-            //    throw new ArgumentNullException(nameof(service));
-
+            service = productsService;
         }
 
         [ProducesResponseType(typeof(Response<IEnumerable<SkubanaProduct>>), 200)]
@@ -44,7 +40,7 @@ namespace MicroserviceWebApi.Controllers.v1
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new SkubanaException(ex.Message, ex.InnerException!);
             }
             
         }
@@ -66,7 +62,7 @@ namespace MicroserviceWebApi.Controllers.v1
             }
             catch (Exception ex)
             {
-                throw new SkubanaException(ex.Message);
+                throw new SkubanaException(ex.Message, ex.InnerException!);
             }
 
         }

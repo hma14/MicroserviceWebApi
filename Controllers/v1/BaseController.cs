@@ -11,20 +11,21 @@ namespace MicroserviceWebApi.Controllers.v1
     public class BaseController : ControllerBase
     {
         protected readonly IConfiguration Configuration;
-        protected readonly SkubanaConfig skubanaConfig;
 
         public BaseController(IConfiguration Configuration)
         {
-            this.Configuration = Configuration ??
-               throw new ArgumentNullException(nameof(Configuration));
+            this.Configuration = Configuration;
 
-            SkubanaEnvironment environment =
-                new SkubanaEnvironment(bool.Parse(Configuration["useSandBox"]) == true ? SkubanaEnvironmentEnum.Sandbox : SkubanaEnvironmentEnum.Production,
-                                       Configuration["baseAuthUrl"], Configuration["baseApiUrl"]);
+            //this.Configuration = Configuration ??
+            //   throw new ArgumentNullException(nameof(Configuration));
 
-            var accessToken = Configuration["accessToken"];
-            SkubanaUserCredentials credentials = string.IsNullOrEmpty(accessToken) == true ? SkubanaUserCredentials.Blank : new SkubanaUserCredentials(accessToken);
-            skubanaConfig = new SkubanaConfig(environment, credentials);
+            //SkubanaEnvironment environment =
+            //    new SkubanaEnvironment(bool.Parse(Configuration["useSandBox"]) == true ? SkubanaEnvironmentEnum.Sandbox : SkubanaEnvironmentEnum.Production,
+            //                           Configuration["baseAuthUrl"], Configuration["baseApiUrl"]);
+
+            //var accessToken = Configuration["accessToken"];
+            //SkubanaUserCredentials credentials = string.IsNullOrEmpty(accessToken) == true ? SkubanaUserCredentials.Blank : new SkubanaUserCredentials(accessToken);
+            //_skubanaConfig = new SkubanaConfig(environment, credentials);
             
         }
     }

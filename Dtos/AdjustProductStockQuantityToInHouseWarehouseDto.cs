@@ -4,6 +4,6 @@
     {      
         public Dictionary<string, int> SkusQuantities { get; set; } 
         public long WarehouseId { get; set; }
-        public CancellationToken Token { get; set; } = CancellationToken.None;
+        public CancellationToken Token { get; set; }
     }
 }

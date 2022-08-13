@@ -1,8 +1,10 @@
 ﻿using MicroserviceWebApi.Dtos;
+using MicroserviceWebApi.SkubanaAccess.Configuration;
 using MicroserviceWebApi.SkubanaAccess.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SkubanaAccess.Exceptions;
 using SkubanaAccess.Models;
 using SkubanaAccess.Services.Inventory;
 using SkubanaAccess.Services.Products;
@@ -15,9 +17,9 @@ namespace MicroserviceWebApi.Controllers.v1
     public class InventoryController : BaseController
     {
         private readonly IInventoryService service;
-        public InventoryController(IConfiguration Configuration) : base(Configuration)
+        public InventoryController(IConfiguration Configuration, IInventoryService inventoryService) : base(Configuration)
         {
-            service = new InventoryService(skubanaConfig);
+            service = inventoryService;
         }
 
         [ProducesResponseType(typeof(Response<IEnumerable<AdjustProductStockQuantityResponse>>), 200)]
@@ -32,7 +34,6 @@ namespace MicroserviceWebApi.Controllers.v1
             var quantity = dto.Quantity;
             var warehouseId = dto.WarehouseId;
             var token = dto.Token;
-            //var mark = dto.Mark;
             try
             {
                 var result = await service.AdjustProductStockQuantityTo3PLWarehouse(sku, quantity, warehouseId, token);
@@ -40,7 +41,7 @@ namespace MicroserviceWebApi.Controllers.v1
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new SkubanaException(ex.Message, ex.InnerException!);
             }
 
         }
@@ -64,7 +65,7 @@ namespace MicroserviceWebApi.Controllers.v1
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new SkubanaException(ex.Message, ex.InnerException!);
             }
 
         }
