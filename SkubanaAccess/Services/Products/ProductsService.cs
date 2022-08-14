@@ -27,7 +27,7 @@ namespace SkubanaAccess.Services.Products
 
             if (token.IsCancellationRequested)
             {
-                var exceptionDetails = CreateMethodCallInfo(base.Config.Environment.BaseApiUrl, mark, additionalInfo: this.AdditionalLogInfo());
+                var exceptionDetails = CreateMethodCallInfo(config.Environment.BaseApiUrl, mark, additionalInfo: this.AdditionalLogInfo());
                 SkubanaLogger.LogTraceException(new SkubanaException(string.Format("{0}. Retrieve products request was cancelled", exceptionDetails)));
             }
 

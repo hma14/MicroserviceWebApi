@@ -14,11 +14,13 @@ namespace MicroserviceWebApi.Controllers.v1
     [Route("api/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    public class InventoryController : BaseController
+    public class InventoryController : ControllerBase
     {
+        private readonly IConfiguration config;
         private readonly IInventoryService service;
-        public InventoryController(IConfiguration Configuration, IInventoryService inventoryService) : base(Configuration)
+        public InventoryController(IConfiguration Configuration, IInventoryService inventoryService)
         {
+            config = Configuration;
             service = inventoryService;
         }
 

@@ -15,11 +15,13 @@ namespace MicroserviceWebApi.Controllers.v1
     [Route("api/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    public class ProductsController : BaseController
+    public class ProductsController : ControllerBase
     {
+        private readonly IConfiguration config;
         private readonly IProductsService service;
-        public ProductsController(IConfiguration Configuration, IProductsService productsService) : base(Configuration)
+        public ProductsController(IConfiguration Configuration, IProductsService productsService)
         {
+            config = Configuration;
             service = productsService;
         }
 
