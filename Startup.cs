@@ -9,7 +9,7 @@ namespace MicroserviceWebApi
 {
     public class Startup
     {
-
+         
         public IConfiguration _config { get; }
         public SkubanaConfig _skubanaConfig { get; set; }
 
@@ -32,6 +32,8 @@ namespace MicroserviceWebApi
             //services.AddSkubanaServices(_config);
             services.AddScoped<IProductsService, ProductsService>(x => new ProductsService(_skubanaConfig));
             services.AddScoped<IInventoryService, InventoryService>(x => new InventoryService(_skubanaConfig));
+
+            services.AddHealthChecks();
 
 
         }

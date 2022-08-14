@@ -1,5 +1,6 @@
 
 using MicroserviceWebApi;
+using MicroserviceWebApi.Extensions;
 using MicroserviceWebApi.SkubanaAccess.Abstracts;
 using MicroserviceWebApi.SkubanaAccess.Configuration;
 using SkubanaAccess;
@@ -14,23 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services); // calling ConfigureServices method
 
+builder.Services.AddCorsService(MyAllowSpecificOrigins);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioningExtension();
 builder.Services.AddSwaggerGen();
-
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: MyAllowSpecificOrigins,
-//                      policy =>
-//                      {
-//                          policy.WithOrigins("https://demo.skubana.com", "https://api.demo.skubana.com",
-//                                              "https://app.skubana.com", "https://api.skubana.com")
-//                                              .AllowAnyHeader()
-//                                              .AllowAnyMethod();
-//                      });
-//});
-
 
 var app = builder.Build();
 
