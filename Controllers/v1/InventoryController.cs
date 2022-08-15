@@ -35,7 +35,7 @@ namespace MicroserviceWebApi.Controllers.v1
             var sku = dto.Sku;
             var quantity = dto.Quantity;
             var warehouseId = dto.WarehouseId;
-            var token = dto.Token;
+            CancellationToken token = dto.IsCancelRequested == true ? new CancellationToken(true) : CancellationToken.None;
             try
             {
                 var result = await service.AdjustProductStockQuantityTo3PLWarehouse(sku, quantity, warehouseId, token);
@@ -59,7 +59,7 @@ namespace MicroserviceWebApi.Controllers.v1
 
             var skusQuantities = dto.SkusQuantities; 
             var warehouseId = dto.WarehouseId;
-            var token = dto.Token;
+            CancellationToken token = dto.IsCancelRequested == true ? new CancellationToken(true) : CancellationToken.None;
             try
             {
                 var result = await service.AdjustProductsStockQuantitiesTo3PLWarehouse(skusQuantities, warehouseId, token);

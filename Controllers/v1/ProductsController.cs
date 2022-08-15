@@ -19,9 +19,9 @@ namespace MicroserviceWebApi.Controllers.v1
     {
         private readonly IConfiguration config;
         private readonly IProductsService service;
-        public ProductsController(IConfiguration Configuration, IProductsService productsService)
+        public ProductsController(IConfiguration configuration, IProductsService productsService)
         {
-            config = Configuration;
+            config = configuration;
             service = productsService;
         }
 
@@ -34,7 +34,7 @@ namespace MicroserviceWebApi.Controllers.v1
         public async Task<IEnumerable<SkubanaProduct>> GetProductsBySkus([FromBody] GetProductsBySkusDto dto)
         {
             var skus = dto.Skus;
-            var token = dto.Token;
+            var token = dto.IsCancelRequested == true ? new CancellationToken(true) : CancellationToken.None;
             try
             {
                 var result = await service.GetProductsBySkus(skus, token);
@@ -56,7 +56,7 @@ namespace MicroserviceWebApi.Controllers.v1
         public async Task<IEnumerable<SkubanaProduct>> GetProductsUpdatedAfter([FromBody] GetProductsUpdatedAfterDto dto)
         {
             var updatedAfterUtc = dto.UpdatedAfterUtc;
-            var token = dto.Token;
+            var token = dto.IsCancelRequested == true ? new CancellationToken(true) : CancellationToken.None;
             try
             {
                 var result = await service.GetProductsUpdatedAfterAsync(updatedAfterUtc, token);

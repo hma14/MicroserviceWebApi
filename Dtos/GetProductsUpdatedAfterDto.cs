@@ -3,6 +3,6 @@
     public class GetProductsUpdatedAfterDto
     {
         public DateTime UpdatedAfterUtc { get; set; }
-        public CancellationToken Token { get; set; } = CancellationToken.None;
+        public bool IsCancelRequested { get; set; }
     }
 }
